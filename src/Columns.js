@@ -3,13 +3,14 @@ import PropTypes from 'prop-types';
 import { Motion, spring } from 'react-motion';
 import keys from 'lodash/keys';
 
-import {
+const {
     clamp,
     toColumns,
     calculateVisiblePositions,
     reinsert,
-    springSetting
-} from './helpers';
+    springSetting,
+    itemStyles
+} = require('./helpers');
 
 export default class Columns extends Component {
     static propTypes = {
@@ -176,6 +177,7 @@ export default class Columns extends Component {
                                         onTouchStart={this.handleTouchStart.bind(null, row, colIndex, [x, y])}
                                         className={isActive ? 'react-columns-item react-columns-item-active' : 'react-columns-item'}
                                         style={{
+                                            ...itemStyles,
                                             width,
                                             height,
                                             WebkitTransform: `translate3d(${translateX}px, ${translateY}px, 0))`,

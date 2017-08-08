@@ -2,8 +2,7 @@ import React, { Component } from 'react';
 import times from 'lodash/times';
 
 import './example.css';
-import '../lib/style.css';
-import Columns from '../lib/Columns.js';
+import Columns from '../Columns.js';
 
 var data = [];
 times(45, item => data.push({ id: item, name: 'Item ' + item}));

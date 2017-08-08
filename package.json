@@ -1,13 +1,13 @@
 {
-  "name": "columns",
-  "version": "0.1.0",
-  "private": true,
+  "name": "react-sortable-columns",
+  "version": "1.0.0",
+  "main": "lib/index.js",
   "dependencies": {
+    "lodash": "^4.17.4",
     "prop-types": "^15.5.10",
     "react": "^15.6.1",
     "react-dom": "^15.6.1",
-    "react-motion": "^0.5.0",
-    "lodash": "^4.17.4"
+    "react-motion": "^0.5.0"
   },
   "peerDependencies": {
     "lodash": "^4.x.x",
@@ -17,12 +17,13 @@
     "react-motion": "^0.5.x"
   },
   "devDependencies": {
+    "babel-cli": "^6.24.1",
     "react-scripts": "1.0.10"
   },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
-    "eject": "react-scripts eject"
+    "build:lib": "NODE_ENV=production babel src --ignore index.js,example,__test__ --out-dir ./lib"
   }
 }
