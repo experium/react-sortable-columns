@@ -2,6 +2,11 @@
   "name": "react-sortable-columns",
   "version": "1.0.0",
   "main": "lib/index.js",
+  "module": "./index.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/experium/react-sortable-columns.git"
+  },
   "dependencies": {
     "lodash": "^4.17.4",
     "prop-types": "^15.5.10",
@@ -22,8 +27,8 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
-    "build:lib": "NODE_ENV=production babel src --ignore index.js,example,__test__ --out-dir ./lib"
+    "test:ci": "CI=true npm test a -- --runInBand",
+    "build": "NODE_ENV=production babel src --ignore index.js,example,__test__ --out-dir ./lib"
   }
 }

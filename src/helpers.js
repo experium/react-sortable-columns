@@ -34,8 +34,8 @@ export const reinsert = (array, colFrom, rowFrom, colTo, rowTo, columns, fixed) 
 };
 
 export const itemStyles = {
-    'box-sizing': '',
+    boxSizing: 'border-box',
     position: 'absolute',
-    'user-select': 'none',
+    userSelect: 'none',
 
 };
