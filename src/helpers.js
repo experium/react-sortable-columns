@@ -37,5 +37,4 @@ export const itemStyles = {
     boxSizing: 'border-box',
     position: 'absolute',
     userSelect: 'none',
-
 };

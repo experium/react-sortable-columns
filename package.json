@@ -1,8 +1,12 @@
 {
   "name": "react-sortable-columns",
-  "version": "1.0.0",
-  "main": "lib/index.js",
+  "version": "1.0.1",
+  "main": "index.js",
   "module": "./index.js",
+  "files": [
+    "lib"
+  ],
+  "description": "Separate your data list array into columns where items can be moved and auto sorted back in array.",
   "repository": {
     "type": "git",
     "url": "https://github.com/experium/react-sortable-columns.git"
