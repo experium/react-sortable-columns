@@ -5,11 +5,18 @@ import './example.css';
 import Columns from '../Columns.js';
 
 var data = [];
-times(55, item => data.push({ id: item, name: 'Item ' + item}));
+times(15, item => data.push({ id: item, name: 'Item ' + item}));
 
 export default class Example extends Component {
     state = {
-        data
+        data,
+        checked: false
+    }
+
+    setChecked = () => {
+        this.setState({
+            checked: !this.state.checked
+        });
     }
 
     updateState = (newOrder) => {
@@ -20,22 +27,24 @@ export default class Example extends Component {
         <div className="item">
             <input
                 type="checkbox"
-                defaultChecked={this.state.data[index].id === 1}
+                checked={this.state.checked}
                 value={item.id}
             />
-            {this.state.data[index].name}
-            {index + 1}
-            { console.log( index) || null }
+            {item.name} {index}
+            { console.log(index) }
         </div>
     );
 
     render() {
-        const { data } = this.state;
+        const { data, checked } = this.state;
 
         return (
             <div className="modal">
+                <button onClick={this.setChecked}>Checked</button>
                 <Columns
-                    initialList={data}
+                    list={data}
+                    getKey={item => item.id}
+                    params={checked}
                     columns={2}
                     fixed={true}
                     width={230}

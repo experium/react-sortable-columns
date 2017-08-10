@@ -19,7 +19,9 @@ const {
 
 export default class Columns extends Component {
     static propTypes = {
-        initialList: PropTypes.array.isRequired,
+        list: PropTypes.array.isRequired,
+        getKey: PropTypes.func,
+        params: PropTypes.any,
         columns: PropTypes.number,
         fixed: PropTypes.bool,
         ItemTemplate: PropTypes.func.isRequired,
@@ -28,11 +30,9 @@ export default class Columns extends Component {
 
     constructor(props) {
         super(props);
-        const { initialList, columns : columnsCount } = props;
+        const { list, columns : columnsCount, getKey } = props;
 
-        this.data = initialList;
-        const data = keys(initialList);
-        const columns = toColumns(data, columnsCount);
+        const columns = toColumns(getKey ? map(list, getKey) : keys(list), columnsCount);
         this.order = getOrder(columns);
 
         this.state = {
@@ -124,14 +124,12 @@ export default class Columns extends Component {
     }
 
     handleMouseUp = () => {
-        const { onChange } = this.props;
+        const { onChange, list, getKey } = this.props;
         const { columns } = this.state;
-        const { data } = this;
 
-        this.data = reorderData(data, columns);
         this.order = getOrder(columns);
         if (onChange) {
-            onChange(this.data);
+            onChange(reorderData(list, columns, getKey));
         }
 
         this.setState({
@@ -145,8 +143,8 @@ export default class Columns extends Component {
 
     render() {
         const { columns, lastPress, currentColumn, isPressed, mouse, moved, isResizing } = this.state;
-        const { width, height, ItemTemplate } = this.props;
-        const { data, order, layout } = this;
+        const { list, params, width, height, ItemTemplate } = this.props;
+        const { order, layout } = this;
 
         const maxHeight = height * columns.reduce((max, { length }) => length > max ? length : max, 0);
         const columnsStyle = {
@@ -157,7 +155,7 @@ export default class Columns extends Component {
         return (
             <div className="react-columns-items" ref={node => this.items = node} style={columnsStyle}>
                 { map(columns, (column, colIndex) =>
-                    map(column, (row) => {
+                    map(column, (row, rowIndex) => {
                         let style,
                             x,
                             y,
@@ -201,7 +199,12 @@ export default class Columns extends Component {
                                             zIndex: (row === lastPress && colIndex === currentColumn) ? 99 : visualPosition,
                                         }}
                                     >
-                                        <Item ItemTemplate={ItemTemplate} item={data[row]} row={row} index={Number(index)} />
+                                        <Item
+                                            ItemTemplate={ItemTemplate}
+                                            params={params}
+                                            item={list[index]}
+                                            index={Number(index)}
+                                        />
                                     </div>
                                 )}
                             </Motion>

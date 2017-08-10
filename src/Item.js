@@ -1,14 +1,9 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 
-export default class Item extends Component {
-    shouldComponentUpdate(nextProps) {
-        return nextProps.id !== this.props.id
-            || nextProps.row !== this.props.row;
-    }
-
+export default class Item extends PureComponent {
     render() {
-        const { ItemTemplate, item, index } = this.props;
+        const { ItemTemplate, ...props } = this.props;
 
-        return <ItemTemplate item={item} index={index} />;
+        return <ItemTemplate {...props} />;
     }
 }
