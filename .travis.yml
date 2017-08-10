@@ -1,16 +1,17 @@
+dist: precise
 language: node_js
 node_js: stable
 
-script:
-- yarn run test:ci
+before_script: npm install
+script: npm run test:ci
 
 jobs:
   include:
     - stage: npm release
       node_js: stable
       before_deploy:
-      - yarn
-      - yarn run build
+      - npm install
+      - npm run build:ci
       deploy:
         provider: npm
         email: "webdev@experium.ru"
