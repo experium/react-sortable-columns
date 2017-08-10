@@ -4,6 +4,8 @@ import { Motion, spring } from 'react-motion';
 import keys from 'lodash/keys';
 import map from 'lodash/map';
 
+import Item from './Item';
+
 const {
     clamp,
     toColumns,
@@ -126,9 +128,9 @@ export default class Columns extends Component {
         const { columns } = this.state;
         const { data } = this;
 
+        this.data = reorderData(data, columns);
+        this.order = getOrder(columns);
         if (onChange) {
-            this.data = reorderData(data, columns);
-            this.order = getOrder(columns);
             onChange(this.data);
         }
 
@@ -199,7 +201,7 @@ export default class Columns extends Component {
                                             zIndex: (row === lastPress && colIndex === currentColumn) ? 99 : visualPosition,
                                         }}
                                     >
-                                        <ItemTemplate item={data[row]} index={Number(index)} />
+                                        <Item ItemTemplate={ItemTemplate} item={data[row]} row={row} index={Number(index)} />
                                     </div>
                                 )}
                             </Motion>

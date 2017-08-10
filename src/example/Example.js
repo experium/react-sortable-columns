@@ -5,7 +5,7 @@ import './example.css';
 import Columns from '../Columns.js';
 
 var data = [];
-times(5, item => data.push({ id: item, name: 'Item ' + item}));
+times(55, item => data.push({ id: item, name: 'Item ' + item}));
 
 export default class Example extends Component {
     state = {
@@ -20,10 +20,12 @@ export default class Example extends Component {
         <div className="item">
             <input
                 type="checkbox"
-                defaultChecked={data[index].id === 1}
+                defaultChecked={this.state.data[index].id === 1}
                 value={item.id}
             />
-            {data[index].name} {index + 1}
+            {this.state.data[index].name}
+            {index + 1}
+            { console.log( index) || null }
         </div>
     );
 

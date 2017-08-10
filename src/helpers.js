@@ -26,12 +26,13 @@ export const reinsert = (array, colFrom, rowFrom, colTo, rowTo, columns, fixed) 
     const val = _array[colFrom][rowFrom];
 
     _array[colFrom].splice(rowFrom, 1);
-    _array[colTo].splice(rowTo, 0, val);
 
     if (colTo !== colFrom && fixed) {
         const data = flatten(_array);
         _array = toColumns(data, columns);
     }
+
+    _array[colTo].splice(rowTo, 0, val);
 
     return _array;
 };
