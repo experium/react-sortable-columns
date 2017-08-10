@@ -1,6 +1,7 @@
 import range from 'lodash/range';
 import chunk from 'lodash/chunk';
 import flatten from 'lodash/flatten';
+import map from 'lodash/map';
 
 export const springSetting = { stiffness: 150, damping: 16 };
 
@@ -20,8 +21,10 @@ export const toColumns = (data, columns) => {
 
 export const reinsert = (array, colFrom, rowFrom, colTo, rowTo, columns, fixed) => {
     rowTo = Math.min(rowTo, array[colTo].length - 1);
+
     var _array = array.slice(0);
     const val = _array[colFrom][rowFrom];
+
     _array[colFrom].splice(rowFrom, 1);
     _array[colTo].splice(rowTo, 0, val);
 
@@ -31,6 +34,12 @@ export const reinsert = (array, colFrom, rowFrom, colTo, rowTo, columns, fixed) 
     }
 
     return _array;
+};
+
+export const reorderData = (data, columns) => {
+    const order = flatten(columns);
+
+    return map(order, index => data[Number(index)]);
 };
 
 export const itemStyles = {

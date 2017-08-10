@@ -16,6 +16,17 @@ export default class Example extends Component {
         this.setState({ data: newOrder });
     }
 
+    renderItem = ({ item, index }) => (
+        <div className="item">
+            <input
+                type="checkbox"
+                defaultChecked={item.id === 1}
+                value={item.id}
+            />
+            {item.name} {index + 1}
+        </div>
+    );
+
     render() {
         const { data } = this.state;
 
@@ -27,16 +38,7 @@ export default class Example extends Component {
                     fixed={true}
                     width={230}
                     height={30}
-                    itemTemplate={(item, index) => (
-                        <div className="item">
-                            <input
-                                type="checkbox"
-                                defaultChecked={item.id === 1}
-                                value={item.id}
-                            />
-                            {item.name} {index}
-                        </div>
-                    )}
+                    ItemTemplate={this.renderItem}
                     onChange={this.updateState}
                 />
             </div>

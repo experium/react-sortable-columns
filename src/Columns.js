@@ -2,12 +2,14 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Motion, spring } from 'react-motion';
 import keys from 'lodash/keys';
+import map from 'lodash/map';
 
 const {
     clamp,
     toColumns,
     calculateVisiblePositions,
     reinsert,
+    reorderData,
     springSetting,
     itemStyles
 } = require('./helpers');
@@ -17,7 +19,7 @@ export default class Columns extends Component {
         initialList: PropTypes.array.isRequired,
         columns: PropTypes.number,
         fixed: PropTypes.bool,
-        itemTemplate: PropTypes.func.isRequired,
+        ItemTemplate: PropTypes.func.isRequired,
         onChange: PropTypes.func
     }
 
@@ -119,8 +121,11 @@ export default class Columns extends Component {
 
     handleMouseUp = () => {
         const { onChange } = this.props;
+        const { columns } = this.state;
+        const { data } = this;
+
         if (onChange) {
-            onChange(this.state.columns);
+            onChange(reorderData(data, columns));
         }
 
         this.setState({
@@ -134,15 +139,19 @@ export default class Columns extends Component {
 
     render() {
         const { columns, lastPress, currentColumn, isPressed, mouse, moved, isResizing } = this.state;
-        const { width, height, itemTemplate } = this.props;
+        const { width, height, ItemTemplate } = this.props;
         const { data, layout } = this;
 
         const maxHeight = height * columns.reduce((max, { length }) => length > max ? length : max, 0);
+        const columnsStyle = {
+            position: 'relative',
+            height: maxHeight
+        };
 
         return (
-            <div className="react-columns-items" ref={node => this.items = node} style={{ height: maxHeight }}>
-                { columns.map( (column, colIndex) =>
-                    column.map( (row) => {
+            <div className="react-columns-items" ref={node => this.items = node} style={columnsStyle}>
+                { map(columns, (column, colIndex) =>
+                    map(column, (row) => {
                         let style,
                             x,
                             y,
@@ -185,7 +194,7 @@ export default class Columns extends Component {
                                             zIndex: (row === lastPress && colIndex === currentColumn) ? 99 : visualPosition,
                                         }}
                                     >
-                                        { itemTemplate(data[row], row) }
+                                        <ItemTemplate item={data[row]} index={row} />
                                     </div>
                                 )}
                             </Motion>
@@ -193,6 +202,6 @@ export default class Columns extends Component {
                     })
                 )}
             </div>
-        )
+        );
     }
 }
