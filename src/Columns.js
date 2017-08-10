@@ -142,6 +142,7 @@ export default class Columns extends Component {
         const { width, height, ItemTemplate } = this.props;
         const { data, layout } = this;
 
+        var index = 0;
         const maxHeight = height * columns.reduce((max, { length }) => length > max ? length : max, 0);
         const columnsStyle = {
             position: 'relative',
@@ -152,6 +153,7 @@ export default class Columns extends Component {
             <div className="react-columns-items" ref={node => this.items = node} style={columnsStyle}>
                 { map(columns, (column, colIndex) =>
                     map(column, (row) => {
+                        const rowIndex = index++;
                         let style,
                             x,
                             y,
@@ -194,7 +196,7 @@ export default class Columns extends Component {
                                             zIndex: (row === lastPress && colIndex === currentColumn) ? 99 : visualPosition,
                                         }}
                                     >
-                                        <ItemTemplate item={data[row]} index={row} />
+                                        <ItemTemplate item={data[row]} index={rowIndex} />
                                     </div>
                                 )}
                             </Motion>

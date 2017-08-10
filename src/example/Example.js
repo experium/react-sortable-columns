@@ -5,7 +5,7 @@ import './example.css';
 import Columns from '../Columns.js';
 
 var data = [];
-times(45, item => data.push({ id: item, name: 'Item ' + item}));
+times(5, item => data.push({ id: item, name: 'Item ' + item}));
 
 export default class Example extends Component {
     state = {
@@ -13,6 +13,7 @@ export default class Example extends Component {
     }
 
     updateState = (newOrder) => {
+        console.log(newOrder);
         this.setState({ data: newOrder });
     }
 

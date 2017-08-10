@@ -1,6 +1,6 @@
 {
   "name": "react-sortable-columns",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "main": "index.js",
   "module": "./index.js",
   "description": "Separate your data list array into columns where items can be moved and auto sorted back in array.",
