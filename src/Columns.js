@@ -9,6 +9,7 @@ const {
     toColumns,
     calculateVisiblePositions,
     reinsert,
+    getOrder,
     reorderData,
     springSetting,
     itemStyles
@@ -30,6 +31,7 @@ export default class Columns extends Component {
         this.data = initialList;
         const data = keys(initialList);
         const columns = toColumns(data, columnsCount);
+        this.order = getOrder(columns);
 
         this.state = {
             mouse: [0, 0],
@@ -125,7 +127,9 @@ export default class Columns extends Component {
         const { data } = this;
 
         if (onChange) {
-            onChange(reorderData(data, columns));
+            this.data = reorderData(data, columns);
+            this.order = getOrder(columns);
+            onChange(this.data);
         }
 
         this.setState({
@@ -140,7 +144,7 @@ export default class Columns extends Component {
     render() {
         const { columns, lastPress, currentColumn, isPressed, mouse, moved, isResizing } = this.state;
         const { width, height, ItemTemplate } = this.props;
-        const { data, layout } = this;
+        const { data, order, layout } = this;
 
         const maxHeight = height * columns.reduce((max, { length }) => length > max ? length : max, 0);
         const columnsStyle = {
@@ -156,6 +160,7 @@ export default class Columns extends Component {
                             x,
                             y,
                             visualPosition = columns[colIndex].indexOf(row),
+                            index = order.indexOf(row),
                             isActive = (row === lastPress && colIndex === currentColumn && isPressed && moved);
 
                         if (isActive) {
@@ -194,7 +199,7 @@ export default class Columns extends Component {
                                             zIndex: (row === lastPress && colIndex === currentColumn) ? 99 : visualPosition,
                                         }}
                                     >
-                                        <ItemTemplate item={data[row]} index={row} />
+                                        <ItemTemplate item={data[row]} index={Number(index)} />
                                     </div>
                                 )}
                             </Motion>

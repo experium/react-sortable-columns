@@ -36,8 +36,12 @@ export const reinsert = (array, colFrom, rowFrom, colTo, rowTo, columns, fixed) 
     return _array;
 };
 
+export const getOrder = (columns) => {
+    return flatten(columns);
+};
+
 export const reorderData = (data, columns) => {
-    const order = flatten(columns);
+    const order = getOrder(columns);
 
     return map(order, index => data[Number(index)]);
 };
