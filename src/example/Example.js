@@ -4,12 +4,12 @@ import times from 'lodash/times';
 import './example.css';
 import Columns from '../Columns.js';
 
-var data = [];
-times(15, item => data.push({ id: item, name: 'Item ' + item}));
+var initialData = [];
+times(10, item => initialData.push({ id: item, name: 'Item ' + item}));
 
 export default class Example extends Component {
     state = {
-        data,
+        data: initialData,
         checked: false
     }
 
@@ -39,19 +39,21 @@ export default class Example extends Component {
         const { data, checked } = this.state;
 
         return (
-            <div className="modal">
-                <button onClick={this.setChecked}>Checked</button>
-                <Columns
-                    list={data}
-                    getKey={item => item.id}
-                    params={checked}
-                    columns={2}
-                    fixed={true}
-                    width={230}
-                    height={30}
-                    ItemTemplate={this.renderItem}
-                    onChange={this.updateState}
-                />
+            <div>
+                <button onClick={() => this.updateState(initialData)}>Set initial</button>
+                <div className="modal">
+                    <Columns
+                        list={data}
+                        getKey={item => item.id}
+                        params={checked}
+                        columns={2}
+                        fixed={true}
+                        width={230}
+                        height={30}
+                        ItemTemplate={this.renderItem}
+                        onChange={this.updateState}
+                    />
+                </div>
             </div>
         );
     }

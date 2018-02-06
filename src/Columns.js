@@ -47,6 +47,15 @@ export default class Columns extends Component {
         };
     }
 
+    componentDidUpdate(prevProps) {
+        if (prevProps.list !== this.props.list) {
+            const { list, getKey, columns : columnsCount } = this.props;
+            const columns = toColumns(getKey ? map(list, getKey) : keys(list), columnsCount);
+            this.order = getOrder(columns);
+            this.setState({ columns });
+        }
+    }
+
     componentWillMount() {
         this.resizeTimeout = null;
         this.layout = calculateVisiblePositions(
