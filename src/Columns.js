@@ -88,7 +88,7 @@ export default class Columns extends Component {
         this.handleMouseMove(e.touches[0]);
     }
 
-    handleMouseMove = ({pageX, pageY}) => {
+    handleMouseMove = ({ pageX, pageY }) => {
         const { width, height, fixed, columns : columnsNumber } = this.props;
         const { columns, lastPress, currentColumn: colFrom, isPressed, delta: [dx, dy] } = this.state;
         var newColumns = columns;
@@ -120,7 +120,11 @@ export default class Columns extends Component {
         }
     }
 
-    handleMouseDown = (key, currentColumn, [pressX, pressY], {pageX, pageY}) => {
+    handleMouseDown = (key, currentColumn, [pressX, pressY], { pageX, pageY, button }) => {
+        if (button) {
+            return;
+        }
+
         this.addEventListeners();
 
         this.setState({
